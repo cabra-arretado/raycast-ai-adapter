@@ -5,7 +5,7 @@ import { URLSearchParams } from "node:url";
 import dotenv from 'dotenv';
 import { text } from "stream/consumers";
 
-dotenv.config();
+// dotenv.config({ path: __dirname + '/.env' });
 
 export default function Command() {
   const [searchText, setSearchText] = useState("");
@@ -50,18 +50,20 @@ export default function Command() {
       "parts":[{
         "text": "${searchText}"}]}]}`)
 
-  const apiKey = process.env.API_KEY;
+  const apiKey = ""; //process.env.API_KEY;
+  console.log(apiKey)
 
   const { data, isLoading } = useFetch(
-    `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${apiKey}` +
-      new URLSearchParams({ body: requestBody}),
+    `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${apiKey}`,
     {
+      headers: {
+        "Content-Type": "application/json",
+      },
+      method: "POST",
+      body: requestBody,
       parseResponse: parseFetchResponse,
     }
   );
-
-  https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=
-
 
   return (
     <List
