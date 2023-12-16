@@ -2,10 +2,10 @@ import { ActionPanel, Action, List } from "@raycast/api";
 import { useFetch, Response } from "@raycast/utils";
 import { useState } from "react";
 import { URLSearchParams } from "node:url";
-import dotenv from 'dotenv';
 import { text } from "stream/consumers";
 
-// dotenv.config({ path: __dirname + '/.env' });
+const dotenv = require("dotenv");
+dotenv.config();
 
 export default function Command() {
   const [searchText, setSearchText] = useState("");
@@ -50,8 +50,8 @@ export default function Command() {
       "parts":[{
         "text": "${searchText}"}]}]}`)
 
-  const apiKey = ""; //process.env.API_KEY;
-  console.log(apiKey)
+  // const apiKey = process.env.API_KEY;
+  // console.log("API KEY:", apiKey)
 
   const { data, isLoading } = useFetch(
     `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${apiKey}`,
@@ -69,7 +69,7 @@ export default function Command() {
     <List
       isLoading={isLoading}
       onSearchTextChange={setSearchText}
-      searchBarPlaceholder="Search npm packages..."
+      searchBarPlaceholder="Ask Gemini a question"
       throttle
     >
       <List.Section title="Results" subtitle={data?.length + ""}>
@@ -135,6 +135,7 @@ interface APIResponse {
 /** Parse the response from the fetch query into something we can display */
 async function parseFetchResponse(response: Response) {
   const json = (await response.json()) as APIResponse;
+  console.log(json)
 
   if (!response.ok || "message" in json) {
     throw new Error(response.statusText);
