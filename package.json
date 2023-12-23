@@ -17,10 +17,19 @@
       "mode": "view"
     }
   ],
+  "preferences": [
+    {
+      "type": "password",
+      "name": "api_key",
+      "required": true,
+      "title": "API Key",
+      "description": "API Key for AI Adapter",
+      "defaultValue": ""
+    }
+  ],
   "dependencies": {
     "@raycast/api": "^1.64.3",
-    "@raycast/utils": "^1.4.8",
-    "dotenv": "^16.3.1"
+    "@raycast/utils": "^1.4.8"
   },
   "devDependencies": {
     "@raycast/eslint-config": "^1.0.6",
