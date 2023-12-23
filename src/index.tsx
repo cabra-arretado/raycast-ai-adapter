@@ -1,9 +1,6 @@
 import { ActionPanel, Action, List, getPreferenceValues } from "@raycast/api";
 import { useFetch, Response } from "@raycast/utils";
 import { useState } from "react";
-import { URLSearchParams } from "node:url";
-import { text } from "stream/consumers";
-import { get } from "node:http";
 
 export default function Command() {
   const [searchText, setSearchText] = useState("What's a good question to ask?");
@@ -61,8 +58,7 @@ export default function Command() {
       searchBarPlaceholder="Ask Gemini a question"
       throttle
     >
-      <List.Section title="Results" subtitle={data?.length + ""}>
-        {/* {data?.map((searchResult) => <SearchListItem key={searchResult.name} searchResult={searchResult} />)} */}
+      <List.Section title="Results" subtitle={data?.candidates.length + ""}>
       </List.Section>
     </List>
   );
@@ -72,20 +68,6 @@ function SearchListItem({ searchResult }: { searchResult: SearchResult }) {
   return (
     <List.Item
       title={searchResult.answer}
-      // actions={
-      //   <ActionPanel>
-      //     <ActionPanel.Section>
-      //       <Action.OpenInBrowser title="Open in Browser" url={searchResult.url} />
-      //     </ActionPanel.Section>
-      //     <ActionPanel.Section>
-      //       <Action.CopyToClipboard
-      //         title="Copy Install Command"
-      //         content={`npm install ${searchResult.name}`}
-      //         shortcut={{ modifiers: ["cmd"], key: "." }}
-      //       />
-      //     </ActionPanel.Section>
-      //   </ActionPanel>
-      // }
     />
   );
 }
